@@ -1,0 +1,26 @@
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Project specifics
+artifacts/
+*.csv
+!PCOS_infertility.csv
+
+# JavaScript/Vite
+pcos-frontend/node_modules
+pcos-frontend/dist
+pcos-frontend/dist-ssr
+pcos-frontend/*.local
+
+# OS
+.DS_Store
+Thumbs.db

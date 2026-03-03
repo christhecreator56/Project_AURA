@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AURA | Personalized PCOS Risk Assessment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>AURA</h1>
+        <p class="subtitle">Personalized Risk Assessment & Health Insight</p>
+      </header>
+
+      <!-- Step 1: Manual Input (Symptom Checklist) -->
+      <section class="card" id="form-section">
+        <h2 class="section-title">
+          <span>📋</span> 1. Personal Symptom Check
+        </h2>
+        <div class="grid">
+          <div class="input-group">
+            <label for="cycle-regularity">Menstrual Cycle Regularity</label>
+            <select id="cycle-regularity">
+              <option value="0">Regular (28-35 days)</option>
+              <option value="1">Irregular / Absent</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="hirsutism">Excessive Body/Facial Hair (Hirsutism)</label>
+            <select id="hirsutism">
+              <option value="0">None / Minimal</option>
+              <option value="1">Frequent / Significant</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="acne">Severe Acne Persistency</label>
+            <select id="acne">
+              <option value="0">No / Occasional</option>
+              <option value="1">Persistent / Severe</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="acanthosis">Darkened Skin Patches (Acanthosis Nigricans)</label>
+            <select id="acanthosis">
+              <option value="0">None</option>
+              <option value="1">Present (Neck, Underarms, etc.)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="bmi">Body Mass Index (BMI)</label>
+            <input type="number" id="bmi" step="0.1" placeholder="e.g. 23.5">
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 2: Clinical Data (Scanning Feature) -->
+      <section class="card">
+        <h2 class="section-title">
+          <span>🔬</span> 2. Clinical Report Analysis
+        </h2>
+        <div class="upload-area" id="drop-zone">
+          <div class="analyze-overlay" id="scan-overlay">
+            <div class="scanning-line"></div>
+            <p>Scanning Clinical Report...</p>
+            <p id="scan-feedback" style="font-size: 0.8rem; margin-top: 1rem; color: var(--primary); font-weight: bold;"></p>
+          </div>
+          <div class="upload-content" id="upload-content">
+            <span class="upload-icon">📄</span>
+            <p>Upload your Clinical Report (Blood Panel/Ultrasound)</p>
+            <p class="subtitle">Supports: LH, FSH, AMH, Follicles</p>
+            <input type="file" id="file-input" accept="image/*">
+            <button class="btn" style="width: auto; margin-top: 1.5rem; padding: 0.75rem 2rem;" onclick="document.getElementById('file-input').click()">CHOOSE IMAGE</button>
+          </div>
+        </div>
+        
+        <div id="manual-clinical-inputs" style="margin-top: 1.5rem; display: none;">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--text-muted);">EXTRACTED VALUES:</h3>
+          <div class="grid">
+            <div class="input-group">
+              <label for="lh">LH (mIU/mL)</label>
+              <input type="number" id="lh" step="0.1" placeholder="e.g. 5.6">
+            </div>
+            <div class="input-group">
+              <label for="fsh">FSH (mIU/mL)</label>
+              <input type="number" id="fsh" step="0.1" placeholder="e.g. 6.2">
+            </div>
+            <div class="input-group">
+              <label for="amh">AMH (ng/mL)</label>
+              <input type="number" id="amh" step="0.1" placeholder="e.g. 2.1">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Prediction Trigger -->
+      <button class="btn" id="analyze-btn" style="margin-bottom: 4rem;">ANALYZE MY PERSONAL RISK</button>
+
+      <!-- Step 3: Result Rendering -->
+      <div id="result-container" class="card">
+        <h2 class="section-title">
+          <span>✨</span> Assessment Result
+        </h2>
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <p class="subtitle">IDENTIFIED RISK PROFILE:</p>
+          <div id="risk-value" style="font-size: 2.5rem; font-weight: 700; color: white;">94%</div>
+          <div id="risk-tier" style="text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">High Concern</div>
+        </div>
+
+        <div class="risk-meter">
+          <div class="risk-fill" id="risk-fill"></div>
+        </div>
+        <div class="risk-labels">
+          <span>Optimal Balance</span>
+          <span>Observation Recommended</span>
+          <span>Clinical Review Advised</span>
+        </div>
+
+        <div class="insight-card">
+          <div class="insight-title">💡 Insight Strategy</div>
+          <p id="insight-text" style="font-size: 0.95rem; color: var(--text-muted);">
+            Based on your biomarker profile—specifically the LH/FSH ratio and AMH levels—this assessment suggests an elevated metabolic-hormonal signature common in certain phenotypes.
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+          <p style="font-size: 0.8rem; color: #64748b; font-style: italic;">
+            *This assessment is a predictive risk profile based on provided data points. It is not a clinical diagnosis. Always share these findings with your specialist for comprehensive care plan development.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
